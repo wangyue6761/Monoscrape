@@ -72,50 +72,50 @@ The basic structure of issues when fetched. The "comments" field is added when u
 ```json
 {
     "statusRef": {
-        "status": <string>,
-        "meansOpen": <boolean>
+        "status": "<string>",
+        "meansOpen": "<boolean>"
     },
-    "openedTimestamp": <int>,
-    "localId": <int>,
-    "projectName": <string>,
-    "ownerModifiedTimestamp":<int>,
-    "starCount": <int>,
+    "openedTimestamp": "<int>",
+    "localId": "<int>",
+    "projectName": "<string>",
+    "ownerModifiedTimestamp":"<int>",
+    "starCount": "<int>",
     "componentRefs": [
         {
-            "path": <string>
+            "path": "<string>"
         }
     ],
-    "summary": <string>,
+    "summary": "<string>",
     "ownerRef": {
-        "displayName": <string>,
-        "userId": <string>
+        "displayName": "<string>",
+        "userId": "<string>"
     },
-    "statusModifiedTimestamp": <int>,
-    "modifiedTimestamp": <int>,
+    "statusModifiedTimestamp": "<int>",
+    "modifiedTimestamp": "<int>",
     "ccRefs": [
         {
-            "displayName": <string>,
-            "userId": <string>
+            "displayName": "<string>",
+            "userId": "<string>"
         },
         ...
     ],
     "fieldValues": [
         {
             "fieldRef": {
-                "fieldName": <string>,
-                "fieldId": <string>,
-                "type": <string>
+                "fieldName": "<string>",
+                "fieldId": "<string>",
+                "type": "<string>"
             },
-            "value": <string>
+            "value": "<string>"
         },
         ...
     ],
-    "componentModifiedTimestamp": <int>,
+    "componentModifiedTimestamp": "<int>",
     "reporterRef": {
-        "displayName": <string>,
-        "userId": <string>
+        "displayName": "<string>",
+        "userId": "<string>"
     },
-    "comments": <array>
+    "comments": "<array>"
 }
 ```
 
@@ -127,21 +127,21 @@ Comment are only added when using the get_all() function. They are appended as a
 {
     "amendments": [
         {
-            "fieldName": <string>,
-            "newOrDeltaValue": <string>
+            "fieldName": "<string>",
+            "newOrDeltaValue": "<string>"
         },
         ...
     ],
-    "localId": <int>,
-    "projectName": <string>,
+    "localId": "<int>",
+    "projectName": "<string>",
     "commenter": {
-        "displayName": <string>,
-        "userId": <string>
+        "displayName": "<string>",
+        "userId": "<string>"
     },
-    "content": <string>,
-    "sequenceNum": <int>,
-    "timestamp": <int>,
-    "attachments": <array>
+    "content": "<string>",
+    "sequenceNum": "<int>",
+    "timestamp": "<int>",
+    "attachments": "<array>"
 }
 ```
 
@@ -151,14 +151,14 @@ The "data" field is added when using the get_all() function. It actually fetches
 
 ```json
 {
-    "contentType": <string>,
-    "filename": <string>,
-    "downloadUrl": <string>,
-    "viewUrl": <string>,
-    "attachmentId": <string>,
-    "thumbnailUrl": <string>,
-    "size": <string>,
-    "data": <string>
+    "contentType": "<string>",
+    "filename": "<string>",
+    "downloadUrl": "<string>",
+    "viewUrl": "<string>",
+    "attachmentId": "<string>",
+    "thumbnailUrl": "<string>",
+    "size": "<string>",
+    "data": "<string>"
 }
 ```
 
