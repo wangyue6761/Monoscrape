@@ -37,7 +37,7 @@ import json
 scrape = Scraper()
 
 # grabs any issues with id > 1132000
-query = scrape.query_builder(num_items=1000000, with_strings="id>1132000")
+query = scrape.query_builder(num_items=1000000, with_strings="id>1132000 v8 security")
 output = scrape.get_all(query)
 
 print(json.dumps(output))
@@ -59,6 +59,107 @@ query = scrape.raw_query('"out of memory" summary:v8')
 output = scrape.search(query)
 
 print(json.dumps(output))
+```
+
+## API
+
+Below for helpfulness, I've added the structure in which this outputs json. This is not 1 to 1 with what the monorail / chromium api's return as I append "comments" to issues and fetch attachment data when using the get_all() function.
+
+### Issues Structure
+
+The basic structure of issues when fetched. The "comments" field is added when using the get_all() function and will not be present otherwise.
+
+```json
+{
+    "statusRef": {
+        "status": <string>,
+        "meansOpen": <boolean>
+    },
+    "openedTimestamp": <int>,
+    "localId": <int>,
+    "projectName": <string>,
+    "ownerModifiedTimestamp":<int>,
+    "starCount": <int>,
+    "componentRefs": [
+        {
+            "path": <string>
+        }
+    ],
+    "summary": <string>,
+    "ownerRef": {
+        "displayName": <string>,
+        "userId": <string>
+    },
+    "statusModifiedTimestamp": <int>,
+    "modifiedTimestamp": <int>,
+    "ccRefs": [
+        {
+            "displayName": <string>,
+            "userId": <string>
+        },
+        ...
+    ],
+    "fieldValues": [
+        {
+            "fieldRef": {
+                "fieldName": <string>,
+                "fieldId": <string>,
+                "type": <string>
+            },
+            "value": <string>
+        },
+        ...
+    ],
+    "componentModifiedTimestamp": <int>,
+    "reporterRef": {
+        "displayName": <string>,
+        "userId": <string>
+    },
+    "comments": <array>
+}
+```
+
+### Comments Structure
+
+Comment are only added when using the get_all() function. They are appended as an array to the issues object.
+
+```json
+{
+    "amendments": [
+        {
+            "fieldName": <string>,
+            "newOrDeltaValue": <string>
+        },
+        ...
+    ],
+    "localId": <int>,
+    "projectName": <string>,
+    "commenter": {
+        "displayName": <string>,
+        "userId": <string>
+    },
+    "content": <string>,
+    "sequenceNum": <int>,
+    "timestamp": <int>,
+    "attachments": <array>
+}
+```
+
+### Attachments Structure
+
+The "data" field is added when using the get_all() function. It actually fetches the attachment, base64 encodes and stores it in the new "data" field.
+
+```json
+{
+    "contentType": <string>,
+    "filename": <string>,
+    "downloadUrl": <string>,
+    "viewUrl": <string>,
+    "attachmentId": <string>,
+    "thumbnailUrl": <string>,
+    "size": <string>,
+    "data": <string>
+}
 ```
 
 ## META
