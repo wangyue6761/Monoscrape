@@ -2,14 +2,13 @@ import json
 import re
 import urllib3
 import base64
-from urllib3 import ProxyManager
 
 
 class Scraper:
     def __init__(self):
         proxy_host = 'localhost'
         proxy_port = '7890'
-        self.proxy = ProxyManager(
+        self.proxy = urllib3.ProxyManager(
             proxy_url=f'http://{proxy_host}:{proxy_port}'
         )
         self.http = urllib3.PoolManager()
@@ -133,7 +132,11 @@ class Scraper:
         ammended_issues = []
         issues = self.search(query)
 
+        issues_number = len(issues['issues'])
+        issues_count = 0
         for issue in issues['issues']:
+            issues_count += 1
+            print("issues:{}/{}".format(issues_count, issues_number), end='\r')
             loc_id = issue['localId']
             comments = self.get_comments(loc_id)
 

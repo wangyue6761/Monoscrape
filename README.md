@@ -1,6 +1,6 @@
 # Monorail / Chromium Issue Scraper
-https://bugs.chromium.org//robots.txt
-https://chromium.googlesource.com/infra/infra/+/HEAD/appengine/monorail/doc/api.md#monorail_issues_list
+爬虫政策 https://bugs.chromium.org//robots.txt
+接口文档 https://chromium.googlesource.com/infra/infra/+/HEAD/appengine/monorail/doc/api.md#monorail_issues_list
 ## What this is
 
 Right now it scrapes bugs.chromium.com for issues, however it can (and  eventually will be) adapted to a general purpose monorail scraper.
