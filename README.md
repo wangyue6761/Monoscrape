@@ -1,5 +1,5 @@
 # Monorail / Chromium Issue Scraper
-
+https://bugs.chromium.org//robots.txt
 ## What this is
 
 Right now it scrapes bugs.chromium.com for issues, however it can (and  eventually will be) adapted to a general purpose monorail scraper.
