@@ -2,10 +2,16 @@ import json
 import re
 import urllib3
 import base64
+from urllib3 import ProxyManager
 
 
 class Scraper:
     def __init__(self):
+        proxy_host = 'localhost'
+        proxy_port = '7890'
+        self.proxy = ProxyManager(
+            proxy_url=f'http://{proxy_host}:{proxy_port}'
+        )
         self.http = urllib3.PoolManager()
         self.token = self.get_token()
 
@@ -98,9 +104,9 @@ class Scraper:
             'origin': 'https://bugs.chromium.org'
         }
 
-        url = "https://bugs.chromium.org/p/chromium/issues/attachment" + link
+        url = "https://bugs.chromium.org/p/chromium/issues/" + link
 
-        r = self.http.request('GET', url, headers=headers)
+        r = self.proxy.request('GET', url, headers=headers)
         b6 = base64.b64encode(r.data).decode('utf-8')
         return b6
 
