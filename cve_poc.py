@@ -28,7 +28,10 @@ def store_desfiles(file_name):
         if "comments" in single_issue:
             localId = str(single_issue["localId"])
             cveid = find_cve_id(single_issue["labelRefs"])
-            description = single_issue["comments"][0]["content"]
+            try:
+                description = single_issue["comments"][0]["content"]
+            except:
+                continue
             issue_path = os.path.join(project_path,"Issue"+localId+ "_"+cveid)
             os.makedirs(issue_path, exist_ok=True)
             with open(os.path.join(issue_path, "description"+localId+".txt"), "w") as file:
@@ -48,15 +51,15 @@ def extract_files():
         
 def all_cve_issues(batch_size):
     print("STEP1 Scrape")
-    print("CVE issues总数: 2855")
     scrape = Scraper()
     next_batch = 1
-    condition = ""
+    have_count = 2528 ## 中断灵活调整,失败的批次文件
+    condition = "id<=114911"  ## 中断灵活调整，失败的批次文件第一个id，或者上一个批次最后一个id
     while(next_batch):
-        print("\nIssues Count:" + str((next_batch-1)*batch_size) + "->" + str(next_batch*batch_size-1))
+        print("\nIssues Count:" + str(have_count + (next_batch-1)*batch_size) + "->" + str(have_count + next_batch*batch_size-1))
         query = scrape.query_builder(num_items=batch_size, labels="CVE_description-submitted", with_strings=condition)
         output = scrape.get_all(query)
-        json_name = "cve_issues" + "_" + str((next_batch-1)*batch_size) + "_" + str(next_batch*batch_size-1) + ".json"
+        json_name = "cve_issues" + "_" + str(have_count + (next_batch-1)*batch_size) + "_" + str(have_count + next_batch*batch_size-1) + ".json"
         with open(os.path.join(issuesjson_path, json_name), "w") as file:
             json.dump(output, file, indent=4)
         if(len(output)>=batch_size):
@@ -66,7 +69,7 @@ def all_cve_issues(batch_size):
             next_batch = 0
 
 if __name__ == "__main__":
-    batch_size = 3
+    batch_size = 100
     os.makedirs(issuesjson_path, exist_ok=True)
     all_cve_issues(batch_size)
     extract_files()
