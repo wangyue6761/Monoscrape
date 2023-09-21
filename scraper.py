@@ -2,7 +2,7 @@ import json
 import re
 import urllib3
 import base64
-
+import os
 
 class Scraper:
     def __init__(self):
@@ -138,7 +138,14 @@ class Scraper:
             issues_count += 1
             print("issues:{}/{}".format(issues_count, issues_number), end='\r')
             loc_id = issue['localId']
-            comments = self.get_comments(loc_id)
+            try:
+                comments = self.get_comments(loc_id)
+            except:
+                with open("Error_CVE.txt", "a") as file:
+                    file.write("Error id:{}".format(loc_id))
+                print("Error id:{}".format(loc_id))
+                continue
+
 
             if "comments" in comments:
                 for comment in comments['comments']:
