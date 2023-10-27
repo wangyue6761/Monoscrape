@@ -5,8 +5,8 @@ import re
 import base64
 import datetime
 
-project_path = "chromium_cve_poc"
-issuesjson_path = "CVE_issues_json"
+project_path = "chromium_all_poc"
+issuesjson_path = "ALL_issues_json"
 
 def find_cve_id(labels):
     pattern = r'CVE-\d{4}-\d{4,7}'
@@ -73,11 +73,11 @@ def all_cve_issues(batch_size):
     print("STEP1 Scrape")
     scrape = Scraper()
     next_batch = 1
-    have_count = 2528 ## 中断灵活调整,失败的批次文件
-    condition = "id<=114911"  ## 中断灵活调整，失败的批次文件第一个id，或者上一个批次最后一个id
+    have_count = 0 ## 中断灵活调整,失败的批次文件
+    condition = ""  ## 中断灵活调整，失败的批次文件第一个id，或者上一个批次最后一个id
     while(next_batch):
         print("\nIssues Count:" + str(have_count + (next_batch-1)*batch_size) + "->" + str(have_count + next_batch*batch_size-1))
-        query = scrape.query_builder(num_items=batch_size, labels="CVE_description-submitted", with_strings=condition)
+        query = scrape.query_builder(num_items=batch_size, with_strings=condition)
         output = scrape.get_all(query)
         json_name = "cve_issues" + "_" + str(have_count + (next_batch-1)*batch_size) + "_" + str(have_count + next_batch*batch_size-1) + ".json"
         with open(os.path.join(issuesjson_path, json_name), "w") as file:
@@ -91,5 +91,5 @@ def all_cve_issues(batch_size):
 if __name__ == "__main__":
     batch_size = 100
     os.makedirs(issuesjson_path, exist_ok=True)
-    # all_cve_issues(batch_size)
+    all_cve_issues(batch_size)
     extract_files()
