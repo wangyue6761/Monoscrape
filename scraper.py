@@ -136,7 +136,7 @@ class Scraper:
         issues_count = 0
         for issue in issues['issues']:
             issues_count += 1
-            print("issues:{}/{}".format(issues_count, issues_number), end='\r')
+            print("issues:{}/{}  all:{}".format(issues_count, issues_number, issues['totalResults']), end='\r')
             loc_id = issue['localId']
             try:
                 comments = self.get_comments(loc_id)
